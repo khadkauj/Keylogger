@@ -35,35 +35,36 @@ Unauthorized use to monitor others without consent is illegal and unethical.
 ##  🚀 Setup Instructions
 1. Clone or Download the Script
 
-git clone https://github.com/yourusername/telegram-keylogger
-cd telegram-keylogger
-Or just create a Python file (keylogger.py) and paste the code.
+`git clone https://github.com/yourusername/telegram-keylogger`
+
+`cd telegram-keylogger`
 
 2. Create a Telegram Bot
-Open Telegram and search @BotFather
+- Open Telegram and search @BotFather
 
-Use /newbot and follow prompts to get your bot token
+- Use /newbot and follow prompts to get your bot token
 
-Save your token for later
+- Save your token for later
 
 3. Get Your Telegram Chat ID
-Start a chat with your bot
+- Start a chat with your bot
 
-Visit the following URL in your browser:
+- Visit the following URL in your browser:
 
-https://api.telegram.org/bot<YOUR_BOT_TOKEN>/getUpdates
-Send a message to the bot, then refresh the URL
+`https://api.telegram.org/bot<YOUR_BOT_TOKEN>/getUpdates`
 
-Look for "chat":{"id":123456789,...} — that’s your chat ID
+- Send a message to the bot, then refresh the URL
+
+- Look for "chat":{"id":123456789,...} — that’s your chat ID
 
 4. Install Dependencies
-Make sure you're using Python 3.9+ (for zoneinfo) and have the following libraries:
+- Make sure you're using Python 3.9+ (for zoneinfo) and have the following libraries:
 
 
 `pip install pynput Pillow requests`
 
 5. Configure the Script
-Edit these lines in the script:
+- Edit these lines in the script:
 
 `TELEGRAM_BOT_TOKEN = "YOUR_BOT_TOKEN"`
 `TELEGRAM_CHAT_ID = "YOUR_CHAT_ID"`
@@ -72,24 +73,14 @@ Edit these lines in the script:
 
 `python keylogger.py`
 
-The script will:
+The script will start listening to keystrokes every 10 minutes, send the buffered keystrokes as a message, take and send a screenshot
 
-Start listening to keystrokes
+## 🛑 Safety Tips
+- Do not run this script on shared, public, or unauthorized machines.
 
-Every 10 minutes:
+- Do not distribute this code without including this README and disclaimer.
 
-Send the buffered keystrokes as a message
+- Always respect privacy and cyber laws.
 
-Take and send a screenshot
-
-Clear local logs and screenshot afterward
-
-🛑 Safety Tips
-Do not run this script on shared, public, or unauthorized machines.
-
-Do not distribute this code without including this README and disclaimer.
-
-Always respect privacy and cyber laws.
-
-📜 License
+## 📜 License
 This project is for educational purposes only and does not come with any license for malicious use.
