@@ -60,17 +60,18 @@ Look for "chat":{"id":123456789,...} — that’s your chat ID
 Make sure you're using Python 3.9+ (for zoneinfo) and have the following libraries:
 
 
-pip install pynput Pillow requests
+`pip install pynput Pillow requests`
+
 5. Configure the Script
 Edit these lines in the script:
 
-python
+`TELEGRAM_BOT_TOKEN = "YOUR_BOT_TOKEN"`
+`TELEGRAM_CHAT_ID = "YOUR_CHAT_ID"`
 
-TELEGRAM_BOT_TOKEN = "YOUR_BOT_TOKEN"
-TELEGRAM_CHAT_ID = "YOUR_CHAT_ID"
 6. Run the Script
 
-python keylogger.py
+`python keylogger.py`
+
 The script will:
 
 Start listening to keystrokes
