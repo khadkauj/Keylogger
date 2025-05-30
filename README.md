@@ -1,43 +1,44 @@
 ## 🔐 Telegram Keylogger (For Educational Use Only)
 
-A Python-based keylogger that logs keystrokes and sends them to Telegram every 10 minutes, along with a screenshot.
+A Python-based keylogger that logs keystrokes, captures screenshots, and accepts remote system commands — all securely in your Telegram bot.
+
 
 ## ⚠️ Disclaimer:
 This tool is intended strictly for educational purposes in a controlled, personal lab environment only.
 Unauthorized use to monitor others without consent is illegal and unethical.
 
 ## Overview
-- This Python script captures:
+Keylogger.py is a multi-functional monitoring tool that:
 
-- Keystrokes on your system.
+- ✅ Logs keystrokes in real time
 
-- Screenshots of the screen every 10 minutes.
+- 🖼️ Captures screenshots every 10 minutes
 
-- It sends both to a Telegram bot:
+- 📬 Sends both to a private Telegram bot
 
-- Keystrokes are sent as a formatted message.
-
-- Screenshots are sent as compressed JPEG images.
+- 💻 Supports remote command execution via Telegram messages
 
 ## Features
--  Real-time keystroke logging (with buffer handling)
+- ⌨️ Keystroke logging with buffer and formatting
 
--  Screenshot capture every 10 minutes (resized for efficiency)
+- 🖼️ Screenshot capture every 10 minutes (compressed JPEG)
 
--  Sends all data to a private Telegram bot
+- 📬 Telegram integration for sending logs and images
 
--  Automatically deletes screenshots after successful upload
+- 🧹 Automatic deletion of screenshots after successful upload
 
--  No third-party storage like Firebase—only Telegram is used
+- 🔁 Multithreaded execution for continuous background operation
 
--  Runs silently in the background using multithreading
+- 🔐 Remote command execution: Run system commands via Telegram (e.g., shutdown /s)
+
+- ❌ No third-party storage or cloud integration — data goes only to Telegram
 
 ##  🚀 Setup Instructions
 1. Clone or Download the Script
 
-`git clone https://github.com/yourusername/telegram-keylogger`
+`git clone https://github.com/khadkauj/Keylogger.git`
 
-`cd telegram-keylogger`
+`cd Keylogger`
 
 2. Create a Telegram Bot
 - Open Telegram and search @BotFather
@@ -71,9 +72,25 @@ Unauthorized use to monitor others without consent is illegal and unethical.
 
 6. Run the Script
 
-`python KeyloggerWithScreenshot.py`
+`pip install -r requirements.txt`
 
-The script will start listening to keystrokes every 10 minutes, send the buffered keystrokes as a message, take and send a screenshot
+`python Keylogger.py`
+
+
+The script will begin 
+- sending keystrokes and screenshots(both every 5 minute; you can change the time limit in code), and 
+- listening for remote commands via Telegram.
+
+## Remote Command Execution
+Send a plain text message to your bot and it will be executed as a system command.
+
+Examples:
+
+shutdown /s
+hostname
+systeminfo
+
+⚠️ All commands are executed with the same privileges as the user running the script. Be careful with destructive or administrative commands.
 
 ## 🛑 Safety Tips
 - Do not run this script on shared, public, or unauthorized machines.
@@ -85,5 +102,4 @@ The script will start listening to keystrokes every 10 minutes, send the buffere
 ## 📜 License
 This project is for educational purposes only and does not come with any license for malicious use.
 
-## Additional Feature
-1. New file KeyloggerWithRemoteCommandExecution.py can also allow remote code execution.You can give command in the telegram chat. Example, `shutdown /s` shutdowns the victim's  laptop.
+Use at your own risk. The developer is not responsible for any misuse.
